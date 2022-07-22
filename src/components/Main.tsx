@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { storage } from "../firebase";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
-import Mosaicgallery from "./Gallery";
+import Gallery from "./Gallery";
 
 const Main = () => {
   const [imageList, setImageList] = useState<
@@ -22,6 +22,6 @@ const Main = () => {
     }
   });
 
-  return <Mosaicgallery imageList={imageList} setImageList={setImageList} />;
+  return <Gallery imageList={imageList} setImageList={setImageList} />;
 };
 export default Main;
