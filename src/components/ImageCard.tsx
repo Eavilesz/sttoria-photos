@@ -4,13 +4,14 @@ import CardInfo from "./CardInfo";
 interface ImageCardProps {
   clickedImage: (src: string) => void;
   like: (idx: number) => void;
+  comment: (idx: number, input: string) => void;
   idx: number;
   imageSrc: string;
-  isChecked: boolean;
+  isLiked: boolean;
 }
 
 const ImageCard: FC<ImageCardProps> = (props) => {
-  const { like, clickedImage, idx, imageSrc, isChecked } = props;
+  const { like, clickedImage, idx, imageSrc, isLiked, comment } = props;
 
   return (
     <div key={idx} className="mb-4 rounded-xl relative">
@@ -21,7 +22,7 @@ const ImageCard: FC<ImageCardProps> = (props) => {
         loading="lazy"
         onClick={(e) => clickedImage(imageSrc)}
       ></img>
-      <CardInfo like={like} idx={idx} isChecked={isChecked} />     
+      <CardInfo comment={comment} like={like} idx={idx} isLiked={isLiked} />
     </div>
   );
 };

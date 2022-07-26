@@ -3,9 +3,9 @@ import ImageModal from "./ImageModal";
 import ImageCard from "./ImageCard";
 
 interface ImageProps {
-  imageList: { src: string; isChecked: boolean }[];
+  imageList: { src: string; isLiked: boolean; comment: string }[];
   setImageList: Dispatch<
-    React.SetStateAction<{ src: string; isChecked: boolean }[]>
+    React.SetStateAction<{ src: string; isLiked: boolean; comment: string }[]>
   >;
 }
 
@@ -24,7 +24,26 @@ const Gallery: FC<ImageProps> = (props) => {
       imageList
         .slice(0, idx)
         .concat([
-          { src: imageList[idx].src, isChecked: !imageList[idx].isChecked },
+          {
+            src: imageList[idx].src,
+            isLiked: !imageList[idx].isLiked,
+            comment: imageList[idx].comment,
+          },
+        ])
+        .concat(imageList.slice(idx + 1, imageList.length))
+    );
+  };
+
+  const comment = (idx: number, input: string): void => {
+    setImageList(
+      imageList
+        .slice(0, idx)
+        .concat([
+          {
+            src: imageList[idx].src,
+            isLiked: imageList[idx].isLiked,
+            comment: input,
+          },
         ])
         .concat(imageList.slice(idx + 1, imageList.length))
     );
@@ -38,7 +57,7 @@ const Gallery: FC<ImageProps> = (props) => {
           currentImage={currentImage}
         />
       )}
-      <div className="sm:columns-2 lg:columns-3 p-4 bg-black">
+      <div className="sm:columns-2 lg:columns-3 px-4 bg-black">
         {imageList.length > 0 &&
           imageList.map((image, idx) => (
             <ImageCard
@@ -46,7 +65,8 @@ const Gallery: FC<ImageProps> = (props) => {
               idx={idx}
               like={like}
               clickedImage={clickedImage}
-              isChecked={image.isChecked}
+              comment={comment}
+              isLiked={image.isLiked}
             />
           ))}
       </div>
