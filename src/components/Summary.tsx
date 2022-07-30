@@ -1,13 +1,10 @@
-import React, { FC } from "react";
+import { FC, useContext } from "react";
+import { ImageContext } from "../context";
 import Navbar from "./Navbar";
 
-interface SummaryProps {
-  imageList: { src: string; isLiked: boolean; comment: string }[];
-}
-
-const Summary: FC<SummaryProps> = (props) => {
-  const { imageList } = props;
-
+const Summary: FC = () => {
+  const imageList = useContext(ImageContext);
+  console.log("%cimageList: %o", "color: #10B981 ;", imageList);
   const selectedImages = imageList.filter((val) => val.isLiked === true);
 
   return (
