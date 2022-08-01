@@ -1,24 +1,30 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { storage } from "../firebase";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import { useParams } from "react-router-dom";
 import { Dispatch, FC } from "react";
 import Gallery from "./Gallery";
+import { ImageContext } from "../context";
 import Navbar from "./Navbar";
 
 interface ImageProps {
-  imageList: { src: string; isLiked: boolean; comment: string }[];
   setImageList: Dispatch<
     React.SetStateAction<{ src: string; isLiked: boolean; comment: string }[]>
   >;
 }
 
 const Main: FC<ImageProps> = (props) => {
-  const { imageList, setImageList } = props;
+  const { setImageList } = props;
+
+  const imageList = useContext(ImageContext);
 
   const params = useParams();
 
   const ImageListRef = ref(storage, `${params.client}`);
+
+  if (params.client !== "cliente-1" && params.client !== "cliente-2") {
+    throw new Error("Client doesn't exist!");
+  }
 
   useEffect(() => {
     if (imageList.length === 0) {
@@ -38,8 +44,7 @@ const Main: FC<ImageProps> = (props) => {
   return (
     <>
       <Navbar />
-      <div className="bg-black"></div>
-      <Gallery imageList={imageList} setImageList={setImageList} />
+      <Gallery setImageList={setImageList} />
     </>
   );
 };

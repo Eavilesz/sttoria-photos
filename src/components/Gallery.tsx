@@ -1,18 +1,20 @@
-import React, { FC, useState, Dispatch } from "react";
+import React, { FC, useState, Dispatch, useContext } from "react";
 import ImageModal from "./ImageModal";
+import { ImageContext } from "../context";
 import ImageCard from "./ImageCard";
 
 interface ImageProps {
-  imageList: { src: string; isLiked: boolean; comment: string }[];
   setImageList: Dispatch<
     React.SetStateAction<{ src: string; isLiked: boolean; comment: string }[]>
   >;
 }
 
 const Gallery: FC<ImageProps> = (props) => {
-  const { imageList, setImageList } = props;
+  const { setImageList } = props;
   const [currentImage, setCurrentImage] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const imageList = useContext(ImageContext);
 
   const clickedImage = (src: string): void => {
     setCurrentImage(src);
@@ -61,6 +63,7 @@ const Gallery: FC<ImageProps> = (props) => {
         {imageList.length > 0 &&
           imageList.map((image, idx) => (
             <ImageCard
+              key={idx}
               imageSrc={image.src}
               idx={idx}
               like={like}
