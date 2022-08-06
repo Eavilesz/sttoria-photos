@@ -1,20 +1,27 @@
-import React, { FC, useState, Dispatch, useContext } from "react";
+import React, { FC, useState, Dispatch, useContext, useEffect } from "react";
 import ImageModal from "./ImageModal";
 import { ImageContext } from "../context";
 import ImageCard from "./ImageCard";
 
 interface ImageProps {
+  doesClientExist: boolean;
   setImageList: Dispatch<
     React.SetStateAction<{ src: string; isLiked: boolean; comment: string }[]>
   >;
 }
 
 const Gallery: FC<ImageProps> = (props) => {
-  const { setImageList } = props;
+  const { setImageList, doesClientExist } = props;
   const [currentImage, setCurrentImage] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const imageList = useContext(ImageContext);
+
+  useEffect(() => {
+    if (!doesClientExist) {
+      throw new Error("That client doesn't exist!");
+    }
+  }, [doesClientExist]);
 
   const clickedImage = (src: string): void => {
     setCurrentImage(src);
@@ -36,7 +43,7 @@ const Gallery: FC<ImageProps> = (props) => {
     );
   };
 
-  const comment = (idx: number, input: string): void => {
+  const commenting = (idx: number, input: string): void => {
     setImageList(
       imageList
         .slice(0, idx)
@@ -68,8 +75,9 @@ const Gallery: FC<ImageProps> = (props) => {
               idx={idx}
               like={like}
               clickedImage={clickedImage}
-              comment={comment}
+              commenting={commenting}
               isLiked={image.isLiked}
+              comment={image.comment}
             />
           ))}
       </div>

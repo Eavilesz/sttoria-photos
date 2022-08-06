@@ -1,11 +1,12 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import { storage } from "../firebase";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import { useParams } from "react-router-dom";
-import { Dispatch, FC } from "react";
+import { Dispatch } from "react";
 import Gallery from "./Gallery";
 import { ImageContext } from "../context";
-import Navbar from "./Navbar";
+import ErrorFallback from "./ErrorFallback";
+import { ErrorBoundary } from "react-error-boundary";
 
 interface ImageProps {
   setImageList: Dispatch<
@@ -13,18 +14,21 @@ interface ImageProps {
   >;
 }
 
-const Main: FC<ImageProps> = (props) => {
+const Main: React.ComponentType<ImageProps> = (props) => {
   const { setImageList } = props;
-
   const imageList = useContext(ImageContext);
 
   const params = useParams();
 
   const ImageListRef = ref(storage, `${params.client}`);
 
-  if (params.client !== "cliente-1" && params.client !== "cliente-2") {
-    throw new Error("Client doesn't exist!");
-  }
+  const [doesClientExist, setDoesClientExist] = useState(true);
+
+  useEffect(() => {
+    if (params.client !== "cliente-1" && params.client !== "cliente-2") {
+      setDoesClientExist(false);
+    }
+  }, [params.client]);
 
   useEffect(() => {
     if (imageList.length === 0) {
@@ -43,8 +47,12 @@ const Main: FC<ImageProps> = (props) => {
 
   return (
     <>
-      <Navbar />
-      <Gallery setImageList={setImageList} />
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <Gallery
+          setImageList={setImageList}
+          doesClientExist={doesClientExist}
+        />
+      </ErrorBoundary>
     </>
   );
 };
