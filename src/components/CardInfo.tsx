@@ -1,4 +1,3 @@
-import { FormEventHandler } from "react";
 import { AiOutlineHeart, AiFillHeart, AiOutlineMessage } from "react-icons/ai";
 
 interface CardInfoProps {
@@ -11,10 +10,6 @@ interface CardInfoProps {
 
 const CardInfo: React.ComponentType<CardInfoProps> = (props) => {
   const { like, idx, isLiked, commenting, comment } = props;
-
-  // const submitHandler = (e: FormEventHandler<HTMLFormElement>) => {
-  //   e.preventDefault();
-  // };
 
   return (
     <div className="flex absolute bottom-0 top-100 bg-gray-600 w-full h-10 rounded-lg justify-center">
@@ -35,14 +30,12 @@ const CardInfo: React.ComponentType<CardInfoProps> = (props) => {
                 size={"1.75rem"}
               />
             </div>
-            <form>
-              <input
-                value={comment}
-                onChange={(e) => commenting(idx, e.target.value)}
-                placeholder="Escriba un comentario"
-                className=" ml-4 bg-slate-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-              ></input>
-            </form>
+            <input
+              value={comment}
+              onChange={(e) => commenting(idx, e.target.value)}
+              placeholder="Escriba un comentario"
+              className=" ml-4 bg-slate-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+            ></input>
           </>
         ) : (
           <div onClick={(e) => like(idx)}>

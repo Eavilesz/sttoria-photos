@@ -1,11 +1,11 @@
-import { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { storage } from "../firebase";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import { useParams } from "react-router-dom";
 import { Dispatch } from "react";
-import Gallery from "./Gallery";
 import { ImageContext } from "../context";
 import ErrorFallback from "./ErrorFallback";
+import Gallery from "./Gallery";
 import { ErrorBoundary } from "react-error-boundary";
 
 interface ImageProps {

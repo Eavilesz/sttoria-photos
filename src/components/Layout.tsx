@@ -1,5 +1,6 @@
 import React, { useCallback } from "react";
 import Navbar from "./Navbar";
+
 //With useCallback
 export function Layout<P>(Component: React.ComponentType<P>) {
   const ComponentWithLayout = useCallback(

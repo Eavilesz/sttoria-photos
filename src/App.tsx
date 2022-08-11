@@ -1,11 +1,11 @@
 import "./App.css";
 import Login from "./components/Login";
 import Main from "./components/Main";
-import Summary from "./components/Summary";
 import { Layout } from "./components/Layout";
 import { ImageContext } from "./context";
+import LoadingPage from "./components/LoadingPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 
 function App() {
   const [imageList, setImageList] = useState<
@@ -13,7 +13,13 @@ function App() {
   >([]);
 
   const MainComponent = Layout(Main);
-  const SummaryComponent = Layout(Summary);
+
+  const SummaryComponent = Layout(
+    lazy(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 1 * 1000));
+      return await import("./components/Summary");
+    })
+  );
 
   return (
     <div className="App">
@@ -25,7 +31,14 @@ function App() {
               path="/main/:client"
               element={<MainComponent setImageList={setImageList} />}
             />
-            <Route path="/summary" element={<SummaryComponent />} />
+            <Route
+              path="/summary"
+              element={
+                <Suspense fallback={<LoadingPage />}>
+                  <SummaryComponent />
+                </Suspense>
+              }
+            />
           </Routes>
         </Router>
       </ImageContext.Provider>

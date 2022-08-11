@@ -66,7 +66,7 @@ const Gallery: FC<ImageProps> = (props) => {
           currentImage={currentImage}
         />
       )}
-      <div className="sm:columns-2 lg:columns-3 px-4 bg-black">
+      <div className="sm:columns-2 lg:columns-3 px-4 ">
         {imageList.length > 0 &&
           imageList.map((image, idx) => (
             <ImageCard
