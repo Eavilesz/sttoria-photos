@@ -16,7 +16,7 @@ interface ImageProps {
 const Login: React.ComponentType<ImageProps> = (props) => {
   const validationMessages: { invalidUsername: string; noUsername: string } = {
     invalidUsername: "*Invalid username!",
-    noUsername: "*Please provida a username!",
+    noUsername: "*Please provide a username!",
   };
 
   const { setImageList } = props;
@@ -66,7 +66,7 @@ const Login: React.ComponentType<ImageProps> = (props) => {
               type="submit"
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
             >
-              Button
+              Enter
             </button>
           </form>
           {errors.user && (

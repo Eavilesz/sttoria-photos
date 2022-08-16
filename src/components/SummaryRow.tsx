@@ -20,7 +20,7 @@ const SummaryRow: FC<SummaryRowProps> = (props) => {
           comment ? "" : "text-red-500"
         } `}
       >
-        {comment ? comment : "Sin comentarios"}
+        {comment ? comment : "No comments!"}
       </div>
     </div>
   );

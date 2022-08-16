@@ -14,6 +14,8 @@ function App() {
 
   const MainComponent = Layout(Main);
 
+  const LoadingPageComponent = Layout(LoadingPage);
+
   const SummaryComponent = Layout(
     lazy(async () => {
       await new Promise((resolve) => setTimeout(resolve, 1 * 1000));
@@ -34,7 +36,7 @@ function App() {
             <Route
               path="/summary"
               element={
-                <Suspense fallback={<LoadingPage />}>
+                <Suspense fallback={<LoadingPageComponent />}>
                   <SummaryComponent />
                 </Suspense>
               }
