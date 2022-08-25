@@ -1,31 +1,25 @@
-import React, { useCallback } from "react";
-import Navbar from "./Navbar";
+// import React, { useCallback } from "react";
+// import Navbar from "./Navbar";
 
-//With useCallback
-export function Layout<P>(Component: React.ComponentType<P>) {
-  const ComponentWithLayout = useCallback(
-    (props: P) => {
-      return (
-        <>
-          <Navbar />
-          <Component {...props} />
-        </>
-      );
-    },
-    [Component]
-  );
-  return ComponentWithLayout;
-}
+// interface LayoutProps {
+//   client: string;
+// }
 
-// Without useCallback
-// export function Layout<P>(Component: React.ComponentType<P>) {
-//   const ComponentWithLayout = (props: P) => {
-//     return (
-//       <>
-//         <Navbar />
-//         <Component {...props} />
-//       </>
-//     );
-//   };
+// export function Layout<LayoutProps>(
+//   Component: React.ComponentType<LayoutProps>
+// ) {
+//   const ComponentWithLayout = useCallback(
+//     (props: LayoutProps) => {
+//       const { client } = props;
+//       return (
+//         <>
+//           <Navbar client={client} />
+//           <Component {...props} />
+//         </>
+//       );
+//     },
+//     [Component]
+//   );
 //   return ComponentWithLayout;
 // }
+export {};

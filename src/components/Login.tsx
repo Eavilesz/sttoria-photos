@@ -9,7 +9,9 @@ type Inputs = {
 
 interface ImageProps {
   setImageList: Dispatch<
-    React.SetStateAction<{ src: string; isLiked: boolean; comment: string }[]>
+    React.SetStateAction<
+      { src: string; isLiked: boolean; comment: string; isPrinted: boolean }[]
+    >
   >;
 }
 
@@ -39,6 +41,7 @@ const Login: React.ComponentType<ImageProps> = (props) => {
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     if (userValidation(data.user)) {
       setImageList([]);
+      localStorage.setItem("client", data.user);
       navigate(`main/${data.user}`);
     }
     setIsUserValid(false);
@@ -54,7 +57,7 @@ const Login: React.ComponentType<ImageProps> = (props) => {
           <form onSubmit={handleSubmit(onSubmit)} className="rounded px-8">
             <div className="mb-4">
               <label className="block text-yellow-300 text-lg font-bold mb-2">
-                Username
+                Usuario
               </label>
               <input
                 {...register("user", { required: true })}
@@ -64,9 +67,9 @@ const Login: React.ComponentType<ImageProps> = (props) => {
 
             <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+              className="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded-full"
             >
-              Enter
+              Entrar
             </button>
           </form>
           {errors.user && (

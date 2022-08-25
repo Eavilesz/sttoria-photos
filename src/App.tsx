@@ -1,27 +1,21 @@
 import "./App.css";
 import Login from "./components/Login";
 import Main from "./components/Main";
-import { Layout } from "./components/Layout";
 import { ImageContext } from "./context";
 import LoadingPage from "./components/LoadingPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState, lazy, Suspense } from "react";
+import Album from "./components/Album";
 
 function App() {
   const [imageList, setImageList] = useState<
-    { src: string; isLiked: boolean; comment: string }[]
+    { src: string; isLiked: boolean; comment: string; isPrinted: boolean }[]
   >([]);
 
-  const MainComponent = Layout(Main);
-
-  const LoadingPageComponent = Layout(LoadingPage);
-
-  const SummaryComponent = Layout(
-    lazy(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1 * 1000));
-      return await import("./components/Summary");
-    })
-  );
+  const SummaryComponent = lazy(async () => {
+    await new Promise((resolve) => setTimeout(resolve, 1 * 1000));
+    return await import("./components/Summary");
+  });
 
   return (
     <div className="App">
@@ -31,12 +25,16 @@ function App() {
             <Route path="/" element={<Login setImageList={setImageList} />} />
             <Route
               path="/main/:client"
-              element={<MainComponent setImageList={setImageList} />}
+              element={<Main setImageList={setImageList} />}
+            />
+            <Route
+              path="/album"
+              element={<Album setImageList={setImageList} />}
             />
             <Route
               path="/summary"
               element={
-                <Suspense fallback={<LoadingPageComponent />}>
+                <Suspense fallback={<LoadingPage />}>
                   <SummaryComponent />
                 </Suspense>
               }

@@ -3,12 +3,13 @@ import { FC } from "react";
 interface SummaryRowProps {
   src: string;
   comment: string;
+  isPrinted: boolean;
 }
 
 const SummaryRow: FC<SummaryRowProps> = (props) => {
-  const { src, comment } = props;
+  const { src, comment, isPrinted } = props;
   return (
-    <div className="grid grid-cols-3 border-b border-slate-500 text-slate-200 ">
+    <div className="grid md:grid-cols-4 border-b border-slate-500 text-slate-200 ">
       <div className="p-2">
         <img src={src} alt="girl" className="rounded-2xl" />
       </div>
@@ -20,7 +21,10 @@ const SummaryRow: FC<SummaryRowProps> = (props) => {
           comment ? "" : "text-red-500"
         } `}
       >
-        {comment ? comment : "No comments!"}
+        {comment ? comment : "Sin comentarios"}
+      </div>
+      <div className="flex justify-center items-center">
+        {isPrinted && "Álbum"}
       </div>
     </div>
   );
