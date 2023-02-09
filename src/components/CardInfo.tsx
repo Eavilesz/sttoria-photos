@@ -31,6 +31,7 @@ const CardInfo: React.ComponentType<CardInfoProps> = (props) => {
               />
             </div>
             <input
+              type="text"
               value={comment}
               onChange={(e) => commenting(idx, e.target.value)}
               placeholder="Write a comment"
